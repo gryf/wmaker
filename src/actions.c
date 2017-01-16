@@ -492,33 +492,31 @@ void handleMaximize(WWindow *wwin, int directions)
 		if ((wwin->flags.old_maximized & MAX_MAXIMUS) &&
 				!(requested & MAX_MAXIMUS))
 			wMaximizeWindow(wwin, MAX_MAXIMUS | flags, head);
-        else {
-            if (requested & MAX_LEFTHALF && current & MAX_LEFTHALF) {
-                p.x = wwin->frame_x - 100;
-                p.y = 0;
+        else if (requested & MAX_LEFTHALF && current & MAX_LEFTHALF) {
+            p.x = wwin->frame_x - 100;
+            p.y = 0;
 
-                if (p.x > 0) {
-                    head = wGetHeadForPoint(wwin->screen_ptr, p);
-                    if (head != wGetHeadForWindow(wwin)) {
-                        effective |= MAX_RIGHTHALF;
-                        effective |= MAX_VERTICAL;
-                        effective &= ~(MAX_HORIZONTAL | MAX_LEFTHALF);
-                        wMaximizeWindow(wwin, effective | flags, head);
-                    }
-                }
-            }
-            else if (requested & MAX_RIGHTHALF && current & MAX_RIGHTHALF) {
-                p.x = wwin->frame_x + wwin->frame->core->width + 100;
-                p.y = 0;
+            if (p.x > 0) {
                 head = wGetHeadForPoint(wwin->screen_ptr, p);
                 if (head != wGetHeadForWindow(wwin)) {
-                    effective |= MAX_LEFTHALF;
-					effective |= MAX_VERTICAL;
-                    effective &= ~(MAX_HORIZONTAL | MAX_RIGHTHALF);
+                    effective |= MAX_RIGHTHALF;
+                    effective |= MAX_VERTICAL;
+                    effective &= ~(MAX_HORIZONTAL | MAX_LEFTHALF);
                     wMaximizeWindow(wwin, effective | flags, head);
                 }
             }
-        }
+        } else if (requested & MAX_RIGHTHALF && current & MAX_RIGHTHALF) {
+            p.x = wwin->frame_x + wwin->frame->core->width + 100;
+            p.y = 0;
+            head = wGetHeadForPoint(wwin->screen_ptr, p);
+            if (head != wGetHeadForWindow(wwin)) {
+                effective |= MAX_LEFTHALF;
+                effective |= MAX_VERTICAL;
+                effective &= ~(MAX_HORIZONTAL | MAX_RIGHTHALF);
+                wMaximizeWindow(wwin, effective | flags, head);
+            }
+        } else
+			wUnmaximizeWindow(wwin);
 	/* these alone mean vertical|horizontal toggle */
 	} else if ((effective == MAX_LEFTHALF) ||
 			(effective == MAX_RIGHTHALF) ||
