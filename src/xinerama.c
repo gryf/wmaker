@@ -236,7 +236,7 @@ int wGetHeadForWindow(WWindow * wwin)
 	return wGetHeadForRect(wwin->screen_ptr, rect);
 }
 
-int wGetHeadForPoint(WScreen * scr, WMPoint point)
+int wGetHeadForPointOrNegative(WScreen * scr, WMPoint point)
 {
 	int i;
 
@@ -247,7 +247,17 @@ int wGetHeadForPoint(WScreen * scr, WMPoint point)
 		    (unsigned)(point.y - rect->pos.y) < rect->size.height)
 			return i;
 	}
-	return scr->xine_info.primary_head;
+	return -1;
+}
+
+int wGetHeadForPoint(WScreen * scr, WMPoint point)
+{
+	int head = wGetHeadForPointOrNegative(scr, point);
+
+    if (head < 0)
+        return scr->xine_info.primary_head;
+
+	return head;
 }
 
 int wGetHeadForPointerLocation(WScreen * scr)

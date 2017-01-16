@@ -41,6 +41,8 @@ int wGetHeadForRect(WScreen *scr, WMRect rect);
 
 int wGetHeadForWindow(WWindow *wwin);
 
+int wGetHeadForPointOrNegative(WScreen * scr, WMPoint point);
+
 int wGetHeadForPoint(WScreen *scr, WMPoint point);
 
 int wGetHeadForPointerLocation(WScreen *scr);
