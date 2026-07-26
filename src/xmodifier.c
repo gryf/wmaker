@@ -23,9 +23,8 @@ Perpetrator: Sudish Joseph <sj@eng.mindspring.net>, Sept. 1997. */
  for more details.
 
  You should have received a copy of the GNU General Public License along
- with XEmacs; see the file COPYING. if not, write to the
- Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- Boston, MA 02110-1301 USA. */
+ with XEmacs; see the file COPYING. if not, see
+ <https://www.gnu.org/licenses/>. */
 
 #include "wconfig.h"
 
